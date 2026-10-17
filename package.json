@@ -47,11 +47,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/OWNER/dsh-literature-agents.git"
+    "url": "git+https://github.com/yujh129/dsh-literature-agents.git"
   },
-  "homepage": "https://github.com/OWNER/dsh-literature-agents#readme",
+  "homepage": "https://github.com/yujh129/dsh-literature-agents#readme",
   "bugs": {
-    "url": "https://github.com/OWNER/dsh-literature-agents/issues"
+    "url": "https://github.com/yujh129/dsh-literature-agents/issues"
   },
   "author": "yujh129 <3167481312@qq.com>",
   "keywords": [

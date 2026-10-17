@@ -56,13 +56,13 @@
 在 dsh-market 中搜索 **Literature & Classics Agents** 安装。安装目标就是本仓库：
 
 ```text
-dsh plugin add github:OWNER/dsh-literature-agents
+dsh plugin add github:yujh129/dsh-literature-agents
 ```
 
 也可以让 agent 在当前会话里调用：
 
 ```text
-plugin_manager install_bundle target="github:OWNER/dsh-literature-agents"
+plugin_manager install_bundle target="github:yujh129/dsh-literature-agents"
 ```
 
 安装会自动加入 profile 的 `dsh.profile.bundles` 并热装载；若曾被停用，再启用一次：
@@ -160,7 +160,7 @@ npm run smoke:client   # client.js：模块 id 等于包名，输入区只注册
 
 dsh-market 从 curated registry 读取目录，收录方式是向
 [`awesome-dsh-plugin/awesome-dsh-plugin`](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin)
-提一个 PR，新增 `data/plugins/OWNER__dsh-literature-agents.yml`。
+提一个 PR，新增 `data/plugins/yujh129__dsh-literature-agents.yml`。
 仓库需要满足：公开、有 `dsh.bundle`、创建满 24 小时、带 GitHub topic `dsh-plugin`。
 条目只需 `url`、`name`、`category`、`description.{en,zh}` 四个字段，一个 PR 最多三条。
 
