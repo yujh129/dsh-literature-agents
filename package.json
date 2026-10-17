@@ -2,7 +2,7 @@
   "name": "dsh-literature-agents",
   "version": "1.0.0",
   "type": "module",
-  "description": "文学与古典文献领域专家插件：9 个文献工具（论文检索、学人生平、古籍全文与今译/英译、引用核验）、11 位文史专家子代理、3 个评审团，另带一个输入区「古籍」开关。适配 DeepSeek Harness 0.2.1-rc.2。",
+  "description": "文学与古典文献领域专家插件：9 个文献工具（论文检索、学人生平、古籍全文与今译/英译、引用核验）、11 位文史专家子代理、3 个评审团，另带一个输入区「古籍」开关。",
   "main": "./index.js",
   "scripts": {
     "smoke": "node dev/register-smoke.mjs && node dev/client-smoke.mjs",
