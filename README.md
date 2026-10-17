@@ -144,6 +144,18 @@ plugin_manager remove_bundle target="dsh-literature-agents"
 - 专家子代理经 `ctx.subagents.startActivation()` 启动；`maxDepth` 仅在 provider 声明
   `capabilities.depthLimit` 时传入，其余情况自动省略。
 
+## 开发自检
+
+改完代码先跑这两个离线冒烟测试（不联网、不写状态、不装依赖）：
+
+```text
+npm run smoke          # 两个都跑
+npm run smoke:host     # index.js：9 个工具的参数必须是合法 JSON Schema，2 条开关路由已注册
+npm run smoke:client   # client.js：模块 id 等于包名，输入区只注册一个入口
+```
+
+`dev/` 不在 `files` 里，不会被发布出去。
+
 ## 发布到插件市场（维护者）
 
 dsh-market 从 curated registry 读取目录，收录方式是向
