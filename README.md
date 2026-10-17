@@ -59,6 +59,10 @@
 dsh plugin add github:yujh129/dsh-literature-agents
 ```
 
+> 桌面版默认不会把 `dsh` 加进 PATH。命令行提示「无法将“dsh”项识别为 cmdlet」时，改用完整路径
+> `<DSH 安装目录>\resources\runtime\cli\bin\dsh.cmd`，或把该 `bin` 目录加进 PATH，或让 agent 用下面的
+> `plugin_manager` 方式安装。
+
 也可以让 agent 在当前会话里调用：
 
 ```text
