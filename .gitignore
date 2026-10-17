@@ -1,0 +1,23 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# build artifacts
+dist/
+*.tgz
+
+# local state and logs
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+.env
+.env.*
+
+# editor
+.vscode/
+.idea/
+*.swp
+
+# local plugin state (the composer switch writes outside the repo, this is a guard)
+toggles.json

@@ -1,0 +1,30 @@
+# dsh-literature-agents bundle layer.
+#
+# Two Host rows:
+#  1. `literature-agents` — the plugin itself: culture tools, the standing
+#     prompt section, expert/panel subagent runs, and the package's own
+#     `literatureSkills` service that locates `skills/`.
+#  2. `literature-agents-skill` — an additional `@deepseek-ai/dsh-skill-filesystem`
+#     provider (distinct `providerName`) that scans only this package's skills
+#     directory, mounted through the `literatureSkills` service published by
+#     row 1. `includeDefaultRoots: false` keeps it from re-discovering the
+#     project/user/bundled default roots.
+#
+# Requires `@deepseek-ai/dsh-base` as an earlier bundle layer (it is the default
+# first bundle of every profile), which supplies the skill registry and the
+# `@deepseek-ai/dsh-skill-filesystem` package.
+- insert:
+    - id: literature-agents
+      name: dsh-literature-agents
+      config:
+        provider: spawn
+        maxDepth: 1
+    - id: literature-agents-skill
+      name: '@deepseek-ai/dsh-skill-filesystem'
+      inject:
+        - literatureSkills
+      config:
+        providerName: literature
+        includeDefaultRoots: false
+        customSkillDirs:
+          - !!js ctx.literatureSkills.skillsDir

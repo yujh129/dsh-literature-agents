@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Literature Agents">
+  <rect width="64" height="64" rx="14" fill="#5b3a1e"/>
+  <path d="M14 16.5h15.5c3.2 0 5.5 2.3 5.5 5.5v26c0-2.6-2-4.5-4.6-4.5H14z" fill="#f5e6c8"/>
+  <path d="M50 16.5H34.5c-3.2 0-5.5 2.3-5.5 5.5v26c0-2.6 2-4.5 4.6-4.5H50z" fill="#e8d3a9"/>
+  <path d="M29 22v9M20 25.5h5M20 30.5h5M23 40l14-3" stroke="#5b3a1e" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+  <circle cx="45" cy="45" r="8.5" fill="none" stroke="#f5e6c8" stroke-width="2.6"/>
+  <path d="M51.2 51.2L57 57" stroke="#f5e6c8" stroke-width="3.4" stroke-linecap="round"/>
+</svg>
