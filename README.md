@@ -150,7 +150,7 @@ dsh-market 从 curated registry 读取目录，收录方式是向
 [`awesome-dsh-plugin/awesome-dsh-plugin`](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin)
 提一个 PR，新增 `data/plugins/OWNER__dsh-literature-agents.yml`。
 仓库需要满足：公开、有 `dsh.bundle`、创建满 24 小时、带 GitHub topic `dsh-plugin`。
-条目内容与提交流程见 `../../market-submission/`。
+条目只需 `url`、`name`、`category`、`description.{en,zh}` 四个字段，一个 PR 最多三条。
 
 ## 许可
 
