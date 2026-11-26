@@ -1,11 +1,13 @@
 {
   "name": "dsh-literature-agents",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "文学与古典文献领域专家插件：9 个文献工具（论文检索、学人生平、古籍全文与今译/英译、引用核验）、11 位文史专家子代理、3 个评审团，另带一个输入区「古籍」开关。",
   "main": "./index.js",
   "scripts": {
-    "smoke": "node dev/register-smoke.mjs && node dev/client-smoke.mjs",
+    "test": "node dev/manifest-smoke.mjs && node dev/register-smoke.mjs && node dev/client-smoke.mjs",
+    "smoke": "npm run test",
+    "smoke:manifest": "node dev/manifest-smoke.mjs",
     "smoke:host": "node dev/register-smoke.mjs",
     "smoke:client": "node dev/client-smoke.mjs"
   },
@@ -40,10 +42,10 @@
       "inject": [
         "@deepseek-ai/dsh-client-ui-conversation"
       ]
-    },
-    "engines": {
-      "dsh": ">=0.2.1-rc.2 <0.3.0 || >=0.3.0-rc.1 <0.4.0-0"
     }
+  },
+  "engines": {
+    "dsh": ">=0.2.1-rc.2 <0.4.0-0"
   },
   "repository": {
     "type": "git",

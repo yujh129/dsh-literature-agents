@@ -324,23 +324,61 @@ function childPrompt(expert, task, instruction) {
 }
 
 /**
+ * The provider names this host can enumerate.
+ *
+ * `ctx.subagents.list()` existed through DSH 0.2.1 and was removed in 0.2.2,
+ * where the provider registry became private and only `getProvider(name)` plus
+ * the `subagent/provider-added` event expose it. Enumeration is therefore probed
+ * instead of assumed, so one bundle runs on both host generations.
+ * @param {import('@deepseek-ai/cordis').Context} ctx
+ * @returns {string[] | undefined} names, or undefined when the host stopped listing them
+ */
+function enumerableProviders(ctx) {
+  const service = ctx?.subagents;
+  if (service === undefined || service === null || typeof service.list !== 'function') return undefined;
+  try {
+    const names = service.list();
+    if (!Array.isArray(names)) return undefined;
+    return names.filter((entry) => typeof entry === 'string' && entry !== '');
+  } catch {
+    return undefined;
+  }
+}
+
+/**
  * Resolve the subagent provider. Defaults to `spawn` and falls back to any
  * registered non-fork provider when `spawn` is absent.
  * @param {import('@deepseek-ai/cordis').Context} ctx
  * @param {{ provider: string }} settings
  */
 function resolveProvider(ctx, settings) {
-  const registered = ctx.subagents.list();
+  const registered = enumerableProviders(ctx);
   if (settings.provider !== '') {
-    if (registered.includes(settings.provider)) return settings.provider;
+    // Without enumeration the configured name is taken on trust: a wrong one
+    // still fails loudly in startActivation (NO_PROVIDER), while refusing here
+    // would break every host that stopped listing providers.
+    if (registered === undefined || registered.includes(settings.provider)) return settings.provider;
     throw new Error(
       `subagent provider "${settings.provider}" 未注册。可用 provider：${registered.join('、') || '(无)'}。请在插件行 config 中修改 provider。`,
     );
   }
-  if (registered.includes('spawn')) return 'spawn';
-  const fallback = registered.find((entry) => entry !== 'fork');
-  if (fallback !== undefined) return fallback;
-  throw new Error(`没有可用的子代理 provider（已注册：${registered.join('、') || '无'}）。`);
+  if (registered !== undefined) {
+    if (registered.includes('spawn')) return 'spawn';
+    const fallback = registered.find((entry) => entry !== 'fork');
+    if (fallback !== undefined) return fallback;
+    const names = registered.join('、') || '无';
+    throw new Error(`没有可用的子代理 provider（已注册：${names}）。`);
+  }
+  // No enumeration (DSH >= 0.2.2): probe the two in-process providers, else let
+  // the activation name the missing default in its own diagnostic.
+  for (const candidate of ['spawn', 'fork']) {
+    try {
+      if (ctx.subagents.getProvider(candidate) !== undefined) return candidate;
+    } catch {
+      /* keep probing */
+    }
+  }
+  return DEFAULTS.provider;
 }
 
 /**
@@ -896,6 +934,7 @@ export function apply(ctx, rawConfig) {
       },
     }),
     output: stringOutput(),
+    isConcurrencySafe: () => true,
     async execute(args) {
       const domainQuery = typeof args?.domain === 'string' ? args.domain : '';
       const domainKey = resolveDomain(domainQuery);
@@ -1025,6 +1064,7 @@ export function apply(ctx, rawConfig) {
       },
     }),
     output: stringOutput(),
+    isConcurrencySafe: () => true,
     async execute(args, exec) {
       const query = trimmed(args?.query);
       const author = trimmed(args?.author);
@@ -1138,6 +1178,7 @@ export function apply(ctx, rawConfig) {
       },
     }),
     output: stringOutput(),
+    isConcurrencySafe: () => true,
     async execute(args, exec) {
       const personName = trimmed(args?.name);
       const qidArg = trimmed(args?.qid);
@@ -1278,6 +1319,7 @@ export function apply(ctx, rawConfig) {
       },
     }),
     output: stringOutput(),
+    isConcurrencySafe: () => true,
     async execute(args, exec) {
       const query = trimmed(args?.query);
       if (query === '') throw new Error('query 不能为空。');
@@ -1346,6 +1388,7 @@ export function apply(ctx, rawConfig) {
       },
     }),
     output: stringOutput(),
+    isConcurrencySafe: () => true,
     async execute(args, exec) {
       const title = trimmed(args?.title);
       if (title === '') throw new Error('title 不能为空。');
@@ -1480,6 +1523,7 @@ export function apply(ctx, rawConfig) {
       },
     }),
     output: stringOutput(),
+    isConcurrencySafe: () => true,
     async execute(args, exec) {
       const citation = trimmed(args?.citation);
       if (citation === '') throw new Error('citation 不能为空。');
